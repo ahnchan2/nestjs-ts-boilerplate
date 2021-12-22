@@ -1,0 +1,12 @@
+# Step 1: build
+FROM node:16.13.1 AS builder
+WORKDIR /app
+COPY . .
+RUN npm install --no-optional
+RUN npm run build
+
+# Step 2: run
+FROM node:16.13.1-alpine
+WORKDIR /app
+COPY --from=builder /app ./
+CMD ["npm", "run", "start:prd"]

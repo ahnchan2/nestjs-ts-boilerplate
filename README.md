@@ -42,7 +42,7 @@ $ npm run start
 $ npm run start:dev
 
 # production mode
-$ npm run start:prod
+$ npm run start:prd
 ```
 
 ## Test
@@ -71,3 +71,16 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Docker
+
+```bash
+# dev
+$ docker run --privileged -it -d -p {host-port}:{container-port} -v {host-src-path}:/app {dev-version-image}
+
+# stg
+$ docker run --privileged -it -d -p {host-port}:{container-port} {stg-version-image}
+
+# prd
+$ docker run --privileged -it -d -p {host-port}:{container-port} {prd-version-image}
+```
