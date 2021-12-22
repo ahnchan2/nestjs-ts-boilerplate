@@ -35,13 +35,13 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
+# dev
 $ npm run start:dev
 
-# production mode
+# stg
+$ npm run start:stg
+
+# prd
 $ npm run start:prd
 ```
 
@@ -76,13 +76,20 @@ Nest is [MIT licensed](LICENSE).
 
 ```bash
 # dev
-$ docker run --privileged -it -d -p {host-port}:{container-port} -v {host-src-path}:/app {dev-version-image}
-$ cd /app (in container)
-$ npm install --no-optional (in container)
+$ (host) docker run --privileged -it -d -p {host-port}:{container-port} -v {host-src-path}:/app {dev-version-image}
+$ (container) cd /app
+$ (container) npm i -g @nestjs/cli
+$ (container) npm install --no-optional
 
 # stg
-$ docker run --privileged -it -d -p {host-port}:{container-port} {stg-version-image}
+$ (host) docker run --privileged -it -d -p {host-port}:{container-port} {stg-version-image}
 
 # prd
-$ docker run --privileged -it -d -p {host-port}:{container-port} {prd-version-image}
+$ (host) docker run --privileged -it -d -p {host-port}:{container-port} {prd-version-image}
 ```
+
+## Reference
+
+NestJS Documentation - https://docs.nestjs.com/
+NestJS Documentation (Korean) - https://docs.nestjs.kr/
+NestJS Community (Korean) - https://www.nest-js.com/tech/19?#
