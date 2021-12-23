@@ -1,12 +1,18 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable, Inject, Logger } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import AppConfig from './config/app/config';
+import DatabaseConfig from './config/database/oracle/config';
 
 @Injectable()
 export class AppService {
   private readonly logger = new Logger(AppService.name);
   constructor(
     // env test
-    private readonly config: ConfigService,
+    @Inject(AppConfig.KEY)
+    private readonly appConfig: ConfigType<typeof AppConfig>,
+
+    @Inject(DatabaseConfig.KEY)
+    private readonly dbConfig: ConfigType<typeof DatabaseConfig>,
   ) {}
 
   getHello(): string {
@@ -18,7 +24,6 @@ export class AppService {
     this.logger.verbose('verbose, this is a message in AppService');
 
     // env test
-    const env = this.config.get("env.name");
-    return 'Hello World!, running in....' + env;
+    return 'Hello World!, running in....' + this.appConfig.env;
   }
 }

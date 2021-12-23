@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 import { MyLogger } from './common/utils/logger/logger.service';
 import { AppModule } from './app.module';
 
@@ -7,6 +8,7 @@ async function bootstrap() {
     bufferLogs: true,
   });
   app.useLogger(app.get(MyLogger));
-  await app.listen(3000);
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get<string>('app.port'));
 }
 bootstrap();
