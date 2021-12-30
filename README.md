@@ -78,8 +78,7 @@ Nest is [MIT licensed](LICENSE).
 # dev
 $ (host) docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app {dev-version-image}
 $ (container) cd /app
-$ (container) npm i -g @nestjs/cli
-$ (container) npm install --no-optional
+$ (container) npm ci --no-optional
 
 # stg
 $ (host) docker run --privileged -it -d -p {host-port}:3000 {stg-version-image}

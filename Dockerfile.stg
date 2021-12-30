@@ -1,10 +1,10 @@
 # Step 1: build
 FROM node:16.13.1 AS builder
 WORKDIR /app
+COPY package*.json ./
+RUN npm ci --no-optional
 COPY . .
-RUN npm i -g @nestjs/cli \
-    && npm install --no-optional \
-    && npm run build
+RUN npm run build
 
 # Step 2: run
 FROM node:16.13.1-alpine

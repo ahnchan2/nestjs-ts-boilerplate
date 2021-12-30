@@ -9,9 +9,11 @@ Dockerfile*
 # IDE - VSCode
 .vscode
 
-# compiled output
-dist
+# dev compiled output
 node_modules
+dist
+npm-debug.log
+logs
 
 # ETC
 .eslintrc.js
