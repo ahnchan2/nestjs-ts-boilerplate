@@ -8,7 +8,11 @@ async function bootstrap() {
     bufferLogs: true,
   });
   app.useLogger(app.get(MyLogger));
+
   const configService = app.get(ConfigService);
-  await app.listen(configService.get<string>('app.port'));
+  const logger = app.get(MyLogger);
+
+  await app.listen(configService.get<number>('app.port'));
+  logger.log(`Application running on [${configService.get<string>('app.env')}] enviroment. ${await app.getUrl()}`);
 }
 bootstrap();
