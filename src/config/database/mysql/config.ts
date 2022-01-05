@@ -1,6 +1,7 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('mysql', () => ({
+    name: 'apix',
     type: 'mysql',
     host: process.env.MYSQL_DB_HOST,
     port: +process.env.MYSQL_DB_PORT,
@@ -8,5 +9,4 @@ export default registerAs('mysql', () => ({
     password: process.env.MYSQL_DB_PASSWORD,
     database: process.env.MYSQL_DB_SCHEMA,
     // entities: [process.env.MYSQL_ENTITY_PATH],
-    // synchronize: true,
   }));

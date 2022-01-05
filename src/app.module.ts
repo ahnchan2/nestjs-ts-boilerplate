@@ -10,13 +10,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import MySqlConfig from './config/database/mysql/config';
 import { MySqlConfigModule } from './config/database/mysql/config.module';
 import { MySqlConfigService } from './config/database/mysql/config.service';
+import OracleConfig from './config/database/oracle/config';
+import { OracleConfigModule } from './config/database/oracle/config.module';
+import { OracleConfigService } from './config/database/oracle/config.service';
 
 @Module({
   imports: [
     LoggerModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [AppConfig, MySqlConfig],
+      load: [AppConfig, MySqlConfig, OracleConfig],
       envFilePath: `${process.env.NODE_ENV}` == '' ? '.env.dev' : `.env.${process.env.NODE_ENV}`,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
@@ -28,6 +31,11 @@ import { MySqlConfigService } from './config/database/mysql/config.service';
       useClass: MySqlConfigService,
       inject: [MySqlConfigService],
     }),
+    // TypeOrmModule.forRootAsync({
+    //   imports: [OracleConfigModule],
+    //   useClass: OracleConfigService,
+    //   inject: [OracleConfigService],
+    // }),
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
