@@ -87,6 +87,24 @@ $ (host) docker run --privileged -it -d -p {host-port}:3000 {stg-version-image}
 $ (host) docker run --privileged -it -d -p {host-port}:3000 {prd-version-image}
 ```
 
+## Guide
+
+Controller
+- API 요청 수신/응답 처리
+- 개별 service 도메인으로 분기 역할 (비지니스 로직 들어가면 안됨)
+- 하나의 API 에서 다수 도메인의 service 사용 가능
+- API 호출하는 source 에 종속적이지 않아야 함 (naming 도 API 호출 대상과 관계가 없어야 함)
+
+DTO
+- 레이어 간 데이터 전송을 위한 객체
+
+Service
+- 각 service 도메인에 따라 비지니스 로직을 처리
+- 비슷한 도메인끼리 service 를 묶어 구분 (ex. 고객조회,고객가입,고객탈퇴 => UserService 또는 마일리지조회,마일리지적립,마일리지차감 => MilageService)
+
+DAO
+- 저장소에 종속적이며, Service 와는 종속적이지 않아야 함
+
 ## Reference
 
 NestJS Documentation - https://docs.nestjs.com/

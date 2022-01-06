@@ -10,13 +10,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    // logging test
-    this.logger.log('log, this is a message in AppController');
-    this.logger.error('error, this is a message in AppController');
-    this.logger.debug('debug, this is a message in AppController');
-    this.logger.warn('warn, this is a message in AppController');
-    this.logger.verbose('verbose, this is a message in AppController');
-
     return this.appService.getHello();
   }
 }

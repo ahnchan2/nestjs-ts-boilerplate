@@ -1,2 +1,16 @@
 FROM node:16.13.1
+
+# install oracle client
+COPY drivers/oracle/instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip /root
+RUN apt-get update \
+    && apt-get install -y libaio1 \
+    && mkdir -p /opt/oracle \
+    && cd /opt/oracle \
+    && mv /root/instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip /opt/oracle \
+    && unzip instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip \
+    && echo /opt/oracle/instantclient_19_13 > /etc/ld.so.conf.d/oracle-instantclient.conf \
+    && rm -rf /opt/oracle/instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip \
+    && rm -rf /var/lib/apt/lists/*
+ENV LD_LIBRARY_PATH /opt/oracle/instantclient_19_13:$LD_LIBRARY_PATH
+
 WORKDIR /app

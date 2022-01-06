@@ -13,6 +13,7 @@ import { MySqlConfigService } from './config/database/mysql/config.service';
 import OracleConfig from './config/database/oracle/config';
 import { OracleConfigModule } from './config/database/oracle/config.module';
 import { OracleConfigService } from './config/database/oracle/config.service';
+import { UsersModule } from './models/modules/users.module';
 
 @Module({
   imports: [
@@ -26,16 +27,17 @@ import { OracleConfigService } from './config/database/oracle/config.service';
           .valid('dev', 'stg', 'prd'),
       }),
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [MySqlConfigModule],
-      useClass: MySqlConfigService,
-      inject: [MySqlConfigService],
-    }),
     // TypeOrmModule.forRootAsync({
-    //   imports: [OracleConfigModule],
-    //   useClass: OracleConfigService,
-    //   inject: [OracleConfigService],
+    //   imports: [MySqlConfigModule],
+    //   useClass: MySqlConfigService,
+    //   inject: [MySqlConfigService],
     // }),
+    TypeOrmModule.forRootAsync({
+      imports: [OracleConfigModule],
+      useClass: OracleConfigService,
+      inject: [OracleConfigService],
+    }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
