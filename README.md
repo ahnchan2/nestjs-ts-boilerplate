@@ -72,22 +72,44 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
-## Docker
+## How to set up the development environment
+1.Install development tools
+  - Docker runtime (tested on v20.10.7)
+  - Visual studio code (with extension: Docker, Remote-Containers)
 
-```bash
-# dev
-$ (host) docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app {dev-version-image}
-$ (container) cd /app
-$ (container) npm ci --no-optional
+2.Clone source code
+  ```bash
+  $ git clone https://github.com/ahnchan2/nestjs-ts-boilerplate.git
+  ```
 
-# stg
-$ (host) docker run --privileged -it -d -p {host-port}:3000 {stg-version-image}
+3.Build development image (skip if image already exists)
+  ```bash
+  # example: image name `fnf:nestjs-ts-boilerplate-dev-0.0.1`
+  $ cd {host-src-path}
+  $ docker build --pull --rm -f "Dockerfile.dev" -t fnf:nestjs-ts-boilerplate-dev-0.0.1 "."
+  ```
 
-# prd
-$ (host) docker run --privileged -it -d -p {host-port}:3000 {prd-version-image}
-```
+4.Run container
+  ```bash
+  # example: image name `fnf:nestjs-ts-boilerplate-dev-0.0.1`
+  $ docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app fnf:nestjs-ts-boilerplate-dev-0.0.1
+  ```
 
-## Guide
+5.Atattach inside to container (recommended to use visual studio code)
+
+6.Install the package (execute commands **inside a container**)
+  ```bash
+  $ cd /app
+  $ npm ci --no-optional
+  ```
+
+7.Run app (execute commands **inside a container**)
+  ```bash
+  $ cd /app
+  $ npm run start:dev
+  ```
+
+## Development Guide
 
 Controller
 - API 요청 수신/응답 처리
