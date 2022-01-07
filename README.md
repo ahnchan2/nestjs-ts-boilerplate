@@ -82,31 +82,36 @@ Nest is [MIT licensed](LICENSE).
   $ git clone https://github.com/ahnchan2/nestjs-ts-boilerplate.git
   ```
 
-3.Build development image (skip if image already exists)
+3.Run container
   ```bash
-  # example: image name `fnf:nestjs-ts-boilerplate-dev-0.0.1`
-  $ cd {host-src-path}
-  $ docker build --pull --rm -f "Dockerfile.dev" -t fnf:nestjs-ts-boilerplate-dev-0.0.1 "."
+  # example if image name is `ahnchan2/fnf:nestjs-ts-boilerplate-dev-0.0.1`
+  # {host-port} : the port you want to open on host
+  # {host-src-path} : absolute path to cloned source code
+
+  # runs in Linux or Intel Chip Mac host
+  $ docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app ahnchan2/fnf:nestjs-ts-boilerplate-dev-0.0.1
+
+  # runs in Apple Chip Mac host
+  $ docker run --privileged --platform linux/amd64 -it -d -p {host-port}:3000 -v {host-src-path}:/app ahnchan2/fnf:nestjs-ts-boilerplate-dev-0.0.1
   ```
 
-4.Run container
-  ```bash
-  # example: image name `fnf:nestjs-ts-boilerplate-dev-0.0.1`
-  $ docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app fnf:nestjs-ts-boilerplate-dev-0.0.1
-  ```
+4.Atattach inside to container (recommended to use visual studio code)
 
-5.Atattach inside to container (recommended to use visual studio code)
-
-6.Install the package (execute commands **inside a container**)
+5.Install the package (execute commands **inside a container**)
   ```bash
   $ cd /app
   $ npm ci --no-optional
   ```
 
-7.Run app (execute commands **inside a container**)
+6.Run app (execute commands **inside a container**)
   ```bash
   $ cd /app
   $ npm run start:dev
+  ```
+
+7.Request test (request from host)
+  ```
+  http://localhost:{host-port}
   ```
 
 ## Development Guide
