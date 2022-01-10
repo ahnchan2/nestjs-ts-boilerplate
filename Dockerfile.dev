@@ -1,16 +1,23 @@
 FROM node:16.13.1
 
+# set oracle client arch
+ARG ORACLE_CLIENT_FILENAME=instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip
+ARG ORACLE_CLIENT_VERSION=19_13
+
+# ARG ORACLE_CLIENT_FILENAME=instantclient-basic-linux.arm64-19.10.0.0.0dbru.zip
+# ARG ORACLE_CLIENT_VERSION=19_10
+
 # install oracle client
-COPY drivers/oracle/instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip /root
+COPY drivers/oracle/${ORACLE_CLIENT_FILENAME} /root
 RUN apt-get update \
     && apt-get install -y libaio1 \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
-    && mv /root/instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip /opt/oracle \
-    && unzip instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip \
-    && echo /opt/oracle/instantclient_19_13 > /etc/ld.so.conf.d/oracle-instantclient.conf \
-    && rm -rf /opt/oracle/instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip \
+    && mv /root/${ORACLE_CLIENT_FILENAME} /opt/oracle \
+    && unzip ${ORACLE_CLIENT_FILENAME} \
+    && echo /opt/oracle/instantclient_${ORACLE_CLIENT_VERSION} > /etc/ld.so.conf.d/oracle-instantclient.conf \
+    && rm -rf /opt/oracle/${ORACLE_CLIENT_FILENAME} \
     && rm -rf /var/lib/apt/lists/*
-ENV LD_LIBRARY_PATH /opt/oracle/instantclient_19_13:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /opt/oracle/instantclient_${ORACLE_CLIENT_VERSION}
 
 WORKDIR /app
