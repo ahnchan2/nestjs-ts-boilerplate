@@ -74,8 +74,8 @@ Nest is [MIT licensed](LICENSE).
 
 ## How to set up the development environment
 1.Install development tools
-  - Docker runtime (tested on v20.10.7)
-  - Visual studio code (with extension: Docker, Remote-Containers)
+  - Docker (tested on v20.10.7)
+  - Visual Studio Code (with extension: Docker, Remote-Containers)
 
 2.Clone source code
   ```bash
@@ -88,11 +88,11 @@ Nest is [MIT licensed](LICENSE).
   # {host-port} : the port you want to open on host
   # {host-src-path} : absolute path to cloned source code
 
-  # runs in Linux or Intel Chip Mac host
-  $ docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app ahnchan2/fnf:nestjs-ts-boilerplate-dev-0.0.1
+  # runs in Linux or Intel Chip Mac host (AMD64)
+  $ docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app ahnchan2/fnf:nestjs-ts-boilerplate-amd64-dev-0.0.1
 
-  # runs in Apple Chip Mac host
-  $ docker run --privileged --platform linux/amd64 -it -d -p {host-port}:3000 -v {host-src-path}:/app ahnchan2/fnf:nestjs-ts-boilerplate-dev-0.0.1
+  # runs in Apple Chip Mac host (ARM64)
+  $ docker run --privileged -it -d -p {host-port}:3000 -v {host-src-path}:/app ahnchan2/fnf:nestjs-ts-boilerplate-arm64-dev-0.0.1
   ```
 
 4.Atattach inside to container (recommended to use visual studio code)
