@@ -10,7 +10,7 @@ ARG ORACLE_CLIENT_VERSION=19_13
 # install oracle client
 COPY drivers/oracle/${ORACLE_CLIENT_FILENAME} /root
 RUN apt-get update \
-    && apt-get install -y libaio1 \
+    && apt-get install -y libaio1 net-tools lsof vim \
     && mkdir -p /opt/oracle \
     && cd /opt/oracle \
     && mv /root/${ORACLE_CLIENT_FILENAME} /opt/oracle \
