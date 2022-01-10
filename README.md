@@ -103,9 +103,10 @@ Nest is [MIT licensed](LICENSE).
   $ npm ci --no-optional
   ```
 
-6.Run app (execute commands **inside a container**)
+6.Build & Run (execute commands **inside a container**)
   ```bash
   $ cd /app
+  $ npm run build
   $ npm run start:dev
   ```
 
