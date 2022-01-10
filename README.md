@@ -26,52 +26,6 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# dev
-$ npm run start:dev
-
-# stg
-$ npm run start:stg
-
-# prd
-$ npm run start:prd
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-
 ## How to set up the development environment
 1.Install development tools
   - Docker (tested on v20.10.7)
@@ -135,6 +89,56 @@ DAO
 
 ## Reference
 
-NestJS Documentation - https://docs.nestjs.com/
-NestJS Documentation (Korean) - https://docs.nestjs.kr/
-NestJS Community (Korean) - https://www.nest-js.com/tech/19?#
+- NestJS Documentation - https://docs.nestjs.com/
+- NestJS Documentation (Korean) - https://docs.nestjs.kr/
+- NestJS Community (Korean) - https://www.nest-js.com/tech/19?#
+
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Installation
+
+```bash
+$ npm install
+```
+
+## Running the app
+
+```bash
+# dev
+$ npm run start:dev
+
+# stg
+$ npm run start:stg
+
+# prd
+$ npm run start:prd
+```
+
+## Test
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
