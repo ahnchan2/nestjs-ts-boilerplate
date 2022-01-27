@@ -54,6 +54,9 @@
 5.Install the package (execute commands **inside a container**)
   ```bash
   $ cd /app
+  $ npm i -g pm2
+  $ pm2 install typescript ts-node
+  $ npm i -g @nestjs/cli
   $ npm ci --no-optional
   ```
 
