@@ -14,6 +14,9 @@ import OracleConfig from './config/database/oracle/config';
 import { OracleConfigModule } from './config/database/oracle/config.module';
 import { OracleConfigService } from './config/database/oracle/config.service';
 import { UsersModule } from './models/modules/users.module';
+import { async } from 'rxjs';
+import { options } from 'joi';
+import { createConnection } from 'typeorm';
 
 @Module({
   imports: [
@@ -31,11 +34,19 @@ import { UsersModule } from './models/modules/users.module';
     //   imports: [MySqlConfigModule],
     //   useClass: MySqlConfigService,
     //   inject: [MySqlConfigService],
+    //   connectionFactory: async(options) => {
+    //     const connection = await createConnection(options);
+    //     return connection;
+    //   }
     // }),
     TypeOrmModule.forRootAsync({
       imports: [OracleConfigModule],
       useClass: OracleConfigService,
       inject: [OracleConfigService],
+      connectionFactory: async(options) => {
+        const connection = await createConnection(options);
+        return connection;
+      }
     }),
     UsersModule,
   ],
