@@ -12,18 +12,19 @@ export class OracleConfigService implements TypeOrmOptionsFactory {
     private readonly oracleConfig: ConfigType<typeof OracleConfig>,
   ) {}
 
-    createTypeOrmOptions(): TypeOrmModuleOptions {
-        return {
-        type: 'oracle',
-        host: this.oracleConfig.host,
-        port: this.oracleConfig.port,
-        username: this.oracleConfig.username,
-        password: this.oracleConfig.password,
-        // database: this.mySqlConfig.database,
-        sid: this.oracleConfig.sid,
-        // entities: this.mySqlConfig.entities,
-        // autoLoadEntities: true,
-        };
-    }
+  createTypeOrmOptions(): TypeOrmModuleOptions {
+    return {
+      type: 'oracle',
+      host: this.oracleConfig.host,
+      port: this.oracleConfig.port,
+      username: this.oracleConfig.username,
+      password: this.oracleConfig.password,
+      sid: this.oracleConfig.sid,
+      // serviceName: "",
+      logging: process.env.NODE_ENV !== 'prd' ? true : false,
+      maxQueryExecutionTime: 30000,
+      keepConnectionAlive: true,
+    };
+  }
 
 }
