@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -7,19 +7,32 @@ import { ApiTags, ApiOperation, ApiResponse, ApiCreatedResponse,  } from '@nestj
 @Controller('users')
 @ApiTags('유저 API')
 export class UsersController {
+  private readonly logger = new Logger(UsersController.name);
   constructor(private readonly usersService: UsersService) {}
+
+  @Get('async')
+  @ApiOperation({ summary: 'async 테스트 API', description: 'async 테스트' })
+  async async() {
+    this.logger.log(`Start /users/async api, ${process.pid} , ${new Date().toLocaleString()}`)
+    const sec = [10, 30];
+    const res = await this.usersService.sleepOracle(sec);
+    // const res = await this.usersService.sleepMySQL(sec);
+    res['controller'] = `hello, pid ${process.pid}`;
+    this.logger.log(`End /users/async api, ${process.pid} , ${new Date().toLocaleString()}`);
+    return res;
+  }
 
   @Get(':id')
   @ApiOperation({ summary: '유저 조회 API', description: '유저를 조회한다.' })
   async findOne(@Param('id') id: string) {
     // return this.usersService.findOne(+id);
-    return this.usersService.getUser(+id)
+    return await this.usersService.getUser(+id)
   }
 
   @Post()
   @ApiOperation({ summary: '유저 조회 API', description: 'DTO 방식으로 유저를 조회한다.' })
-  findOneByDTO(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.getUserByDTO(createUserDto);
+  async findOneByDTO(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.getUserByDTO(createUserDto);
   }
 
   @Patch(':id')
@@ -30,5 +43,11 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @Get('exception-test/:num')
+  @ApiOperation({ summary: 'Exception 테스트 API', description: 'Exception 테스트' })
+  async exceptionTest(@Param('num') num: string) {
+    return await this.usersService.exceptionTest(+num);
   }
 }
