@@ -7,7 +7,29 @@ COPY . .
 RUN npm run build
 
 # Step 2: run
-FROM node:16.13.1-alpine
+FROM node:16.13.1
+
+# set oracle client arch
+ARG ORACLE_CLIENT_FILENAME=instantclient-basic-linux.x64-19.13.0.0.0dbru-2.zip
+ARG ORACLE_CLIENT_VERSION=19_13
+
+# ARG ORACLE_CLIENT_FILENAME=instantclient-basic-linux.arm64-19.10.0.0.0dbru.zip
+# ARG ORACLE_CLIENT_VERSION=19_10
+
+# install oracle client
+COPY drivers/oracle/${ORACLE_CLIENT_FILENAME} /root
+RUN apt-get update \
+    && apt-get install -y libaio1 net-tools lsof vim \
+    && mkdir -p /opt/oracle \
+    && cd /opt/oracle \
+    && mv /root/${ORACLE_CLIENT_FILENAME} /opt/oracle \
+    && unzip ${ORACLE_CLIENT_FILENAME} \
+    && echo /opt/oracle/instantclient_${ORACLE_CLIENT_VERSION} > /etc/ld.so.conf.d/oracle-instantclient.conf \
+    && rm -rf /opt/oracle/${ORACLE_CLIENT_FILENAME} \
+    && rm -rf /var/lib/apt/lists/*
+ENV LD_LIBRARY_PATH /opt/oracle/instantclient_${ORACLE_CLIENT_VERSION}
+
 WORKDIR /app
 COPY --from=builder /app ./
+RUN npm i -g @nestjs/cli pm2
 CMD ["npm", "run", "start:prd"]
