@@ -1,7 +1,7 @@
-import { Injectable, Logger, Catch } from '@nestjs/common';
+import { Injectable, Catch } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { getSqljsManager, getConnection, getManager, Connection } from "typeorm";
+import { getSqljsManager, getConnection, getManager, Connection, QueryRunner } from "typeorm";
 import { InjectConnection } from '@nestjs/typeorm';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class UsersRepository {
     // private connection: Connection,
   ) {}
 
-  async selectUserByIdInOracle(id: number) {
-    const rs = await getConnection().query(`
+  async selectUserByIdInOracle(id: number, queryRunner:QueryRunner=null) {
+    const rs = await getConnection('oracle').query(`
       SELECT
           EMPLOYEE_ID 
           ,FIRST_NAME 
@@ -24,13 +24,13 @@ export class UsersRepository {
           EMPLOYEES
       WHERE 1=1
           AND EMPLOYEE_ID = :0
-    `, [id]);
+    `, [id], queryRunner);
 
     return rs;
   }
 
-  async selectUserByIdInMySQL(id: number) {
-    const rs = await getConnection().query(`
+  async selectUserByIdInMySQL(id: number, queryRunner:QueryRunner=null) {
+    const rs = await getConnection('mysql').query(`
       SELECT
           id 
           ,name
@@ -39,24 +39,40 @@ export class UsersRepository {
           User
       WHERE 1=1
           AND id = ?
-    `, [id]);
+    `, [id], queryRunner);
 
     return rs;
   }
 
-  async sleepOracle(sec: number) {
-    const rs = await getConnection().query(`
+  async insertUserInOracle(id: number, queryRunner:QueryRunner=null) {
+    const rs = await getConnection('oracle').query(`
+    INSERT INTO test VALUES (:0, '홍길동', '서울시 강남구')
+    `, [id], queryRunner);
+
+    return rs;
+  }
+
+  async insertUserInMySQL(id: number, queryRunner:QueryRunner=null) {
+    const rs = await getConnection('mysql').query(`
+      INSERT into User values (?, '홍길동', '서울시 강남구')
+    `, [id], queryRunner);
+
+    return rs;
+  }
+
+  async sleepOracle(sec: number, queryRunner:QueryRunner=null) {
+    const rs = await getConnection('oracle').query(`
       SELECT hr.fn_sleep(:0) as result FROM dual
-    `, [sec]);
+    `, [sec], queryRunner);
 
     return rs;
   }
 
 
-  async sleepMySQL(sec: number) {
-    const rs = await getConnection().query(`
+  async sleepMySQL(sec: number, queryRunner:QueryRunner=null) {
+    const rs = await getConnection('mysql').query(`
       SELECT SLEEP(?)
-    `, [sec]);
+    `, [sec], queryRunner);
 
     return rs;
   }

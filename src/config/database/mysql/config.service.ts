@@ -14,6 +14,7 @@ export class MySqlConfigService implements TypeOrmOptionsFactory {
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
+      name: 'mysql',
       type: 'mysql',
       username: this.mySqlConfig.username,
       password: this.mySqlConfig.password,

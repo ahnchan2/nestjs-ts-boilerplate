@@ -5,18 +5,13 @@ import AppConfig from './config/app/config';
 import { LoggerModule } from './common/utils/logger/logger.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 import MySqlConfig from './config/database/mysql/config';
 import { MySqlConfigModule } from './config/database/mysql/config.module';
-import { MySqlConfigService } from './config/database/mysql/config.service';
 import OracleConfig from './config/database/oracle/config';
 import { OracleConfigModule } from './config/database/oracle/config.module';
-import { OracleConfigService } from './config/database/oracle/config.service';
 import { UsersModule } from './models/modules/users.module';
-import { async } from 'rxjs';
-import { options } from 'joi';
-import { createConnection } from 'typeorm';
+
 
 @Module({
   imports: [
@@ -30,24 +25,8 @@ import { createConnection } from 'typeorm';
           .valid('dev', 'stg', 'prd'),
       }),
     }),
-    // TypeOrmModule.forRootAsync({
-    //   imports: [MySqlConfigModule],
-    //   useClass: MySqlConfigService,
-    //   inject: [MySqlConfigService],
-    //   connectionFactory: async(options) => {
-    //     const connection = await createConnection(options);
-    //     return connection;
-    //   }
-    // }),
-    TypeOrmModule.forRootAsync({
-      imports: [OracleConfigModule],
-      useClass: OracleConfigService,
-      inject: [OracleConfigService],
-      connectionFactory: async(options) => {
-        const connection = await createConnection(options);
-        return connection;
-      }
-    }),
+    OracleConfigModule,
+    MySqlConfigModule,
     UsersModule,
   ],
   controllers: [AppController],

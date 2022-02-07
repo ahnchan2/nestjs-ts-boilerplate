@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -14,7 +15,7 @@ export class UsersController {
   @ApiOperation({ summary: 'async 테스트 API', description: 'async 테스트' })
   async async() {
     this.logger.log(`Start /users/async api, ${process.pid} , ${new Date().toLocaleString()}`)
-    const sec = [10, 30];
+    const sec: number[] = [10, 30];
     const res = await this.usersService.sleepOracle(sec);
     // const res = await this.usersService.sleepMySQL(sec);
     res['controller'] = `hello, pid ${process.pid}`;
@@ -22,7 +23,7 @@ export class UsersController {
     return res;
   }
 
-  @Get(':id')
+  @Get('user-info')
   @ApiOperation({ summary: '유저 조회 API', description: '유저를 조회한다.' })
   async findOne(@Param('id') id: string) {
     // return this.usersService.findOne(+id);
@@ -49,5 +50,13 @@ export class UsersController {
   @ApiOperation({ summary: 'Exception 테스트 API', description: 'Exception 테스트' })
   async exceptionTest(@Param('num') num: string) {
     return await this.usersService.exceptionTest(+num);
+  }
+
+  @Get('transaction-test')
+  @ApiOperation({ summary: 'Transaction 테스트 API', description: 'Transaction 테스트' })
+  async transactionTest(@Req() request: Request) {
+    this.logger.log('START transaction-test API')
+    let ids: number[] = [+request.query.oracleId, +request.query.mysqlId];
+    return await this.usersService.multipleTransactionTest(ids);
   }
 }

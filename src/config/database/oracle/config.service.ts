@@ -14,6 +14,7 @@ export class OracleConfigService implements TypeOrmOptionsFactory {
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
+      name: 'oracle',
       type: 'oracle',
       host: this.oracleConfig.host,
       port: this.oracleConfig.port,
