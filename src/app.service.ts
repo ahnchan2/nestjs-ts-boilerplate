@@ -23,7 +23,7 @@ export class AppService {
     // this.getUserByOracle();
     
     // env test
-    return `Hello World!, running in.... ${this.appConfig.env}, ${process.pid}`;
+    return `Hello World!, running in.... env [${this.appConfig.env}], pid [${process.pid}]`;
   }
 
   // async getUserByMySQL(): Promise<boolean> {
